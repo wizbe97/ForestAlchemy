@@ -368,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4094238722033855491, guid: 1b159bd035f73bd4fb1ada8eb2288e12, type: 3}
       propertyPath: m_Name
-      value: GameCanvas
+      value: GameplayUI
       objectReference: {fileID: 0}
     - target: {fileID: 4505150348488131204, guid: 1b159bd035f73bd4fb1ada8eb2288e12, type: 3}
       propertyPath: m_IsActive
@@ -763,8 +763,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 207001793}
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 701847692}
   - {fileID: 317262325}
-  - {fileID: 207001793}
