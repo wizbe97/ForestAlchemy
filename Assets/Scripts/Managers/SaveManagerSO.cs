@@ -20,8 +20,7 @@ public class SaveManagerSO : ScriptableObject
 
     public void SaveBalance(bool isAutoSave = false)
     {
-        CheckAutoSave();
-
+        // We no longer change currentSlot based on empty slots in CheckAutoSave()
         string json = JsonUtility.ToJson(new BalanceData { balance = gameManager.playerBalanceManager.playerBalance.balance });
         File.WriteAllText(CombinePath(SaveFileBalancePath, isAutoSave ? 0 : currentSlot), json);
     }
@@ -33,33 +32,16 @@ public class SaveManagerSO : ScriptableObject
             string json = File.ReadAllText(CombinePath(SaveFileBalancePath, currentSlot));
             BalanceData balanceData = JsonUtility.FromJson<BalanceData>(json);
             gameManager.playerBalanceManager.playerBalance.balance = balanceData.balance;
-        } 
+        }
         else
         {
             StartEmpty();
         }
     }
 
-    private void CheckAutoSave()
-    {
-        //we make sure we don't override slot 0 when saving manually because slot 0 will be kept for auto saving
-        if (currentSlot == 0)
-        {
-            //loop through slots to see if we have a empty slot to manually save
-            for (int i = 1; i < 4; i++)
-            {
-                if (!IsDataSaved(i))
-                {
-                    currentSlot = i;
-                    break;
-                }
-            }
-        }
-    }
     public void AutoSaveAll()
     {
         SaveBalance(isAutoSave: true);
-
         SaveTimestamp(0); // Slot 0 for autosave
     }
 
@@ -78,13 +60,11 @@ public class SaveManagerSO : ScriptableObject
             return File.ReadAllText(timestampPath);
         else
             return "No save time available.";
-
     }
 
     public void SaveAllData()
     {
         SaveBalance();
-
         SaveTimestamp(currentSlot);
     }
 
@@ -131,8 +111,8 @@ public class SaveManagerSO : ScriptableObject
     }
 }
 
-
 [Serializable]
 public class BalanceData
-{    public int balance;
+{
+    public int balance;
 }
