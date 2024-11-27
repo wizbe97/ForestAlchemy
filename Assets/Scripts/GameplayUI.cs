@@ -19,10 +19,11 @@ public class GameplayUI : MonoBehaviour
     public Button menuConfirmButton;
 
     [Header("SAVE SLOT SELECTION")]
-    public GameObject saveSlotSelectionPanel;  // New panel for selecting save slot
+    public GameObject saveSlotSelectionPanel;  // Panel for selecting save slot
     public Button[] saveSlotButtons;  // Buttons for each slot (1-3)
     public TextMeshProUGUI[] saveSlotLabels;  // Labels for each slot (1-3)
     public Button backToPauseButton;  // Back button to return to the pause menu
+    private bool isSaveAndQuitFlow = false;
 
     public GameManagerSO gameManager;
 
@@ -116,6 +117,13 @@ public class GameplayUI : MonoBehaviour
 
         // Update the save status on the main screen
         UpdateSlotButton(true);
+
+        if (isSaveAndQuitFlow)
+        {
+            Time.timeScale = 1;
+            isSaveAndQuitFlow = false;
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     private void UpdateChooseSlotButtons()
@@ -153,19 +161,36 @@ public class GameplayUI : MonoBehaviour
 
     private void MenuClick()
     {
-        if (saveButton.interactable)
+        // Check if save has been made
+        if (!saveButton.interactable)  // If the save button is not interactable, data has been saved
         {
-            pausePanel.SetActive(false);
-            confirmPanel.SetActive(true);
-            return;
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Menu");
         }
-
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
+        else
+        {
+            // If you're in the auto-save slot (slot 0), first show the confirm panel
+            if (gameManager.saveManager.currentSlot == 0)
+            {
+                // Show the confirm panel to ask if the player wants to save
+                confirmPanel.SetActive(true);
+                pausePanel.SetActive(false);
+            }
+            else
+            {
+                // If you're not in the auto-save slot, show the confirm panel without asking for save
+                confirmPanel.SetActive(true);
+                pausePanel.SetActive(false);
+            }
+        }
     }
 
     private void MenuConfirmClick()
     {
+        // Handle saving or not saving when confirming to quit
+        if (gameManager.saveManager.currentSlot == 0)
+            gameManager.saveManager.SaveAllData();
+
         Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
@@ -178,8 +203,20 @@ public class GameplayUI : MonoBehaviour
 
     private void SaveAndQuit()
     {
-        gameManager.saveManager.SaveAllData();
-        Time.timeScale = 1;
-        SceneManager.LoadScene("Menu");
+        if (gameManager.saveManager.currentSlot != 0)
+        {
+            gameManager.saveManager.SaveAllData();
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Menu");
+        }
+        else
+        {
+            saveSlotSelectionPanel.SetActive(true);  // Show the slot selection panel
+            confirmPanel.SetActive(false);           // Hide the confirm panel
+            pausePanel.SetActive(false);
+            isSaveAndQuitFlow = true;            // Hide the pause panel
+            UpdateChooseSlotButtons();
+        }
+
     }
 }
