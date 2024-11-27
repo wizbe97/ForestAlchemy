@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerBalanceManager
   m_EditorClassIdentifier: 
   playerBalance: {fileID: 11400000, guid: f1cc29a4ae6c0da47af1d165723d4c09, type: 2}
-  onBalanceChangedEvent: {fileID: 0}
+  onBalanceChangedEvent: {fileID: 11400000, guid: 86d9c1da0727c154eb7b19a2168c97a9, type: 2}

@@ -3355,7 +3355,7 @@ MonoBehaviour:
   menuPanel: {fileID: 8044460556166132513}
   newGameButton: {fileID: 5088728756158503785}
   loadGameButton: {fileID: 4880436063675336764}
-  newGameSceneToLoad: Shop
+  newGameSceneToLoad: Forest
   chooseSlotPanel: {fileID: 3018796125708898452}
   chooseSlotBackButton: {fileID: 8966310562527304403}
   chooseSlotButtons:
