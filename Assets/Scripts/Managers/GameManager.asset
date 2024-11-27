@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0329662f585654ba477ac13adee65a, type: 3}
+  m_Name: GameManager
+  m_EditorClassIdentifier: 
+  playerBalanceManager: {fileID: 11400000, guid: 8ed2efeb1a9e5ff4baf22e0841161f46, type: 2}
+  saveManager: {fileID: 11400000, guid: 666cd91ecf8479841b471bc97892533a, type: 2}
