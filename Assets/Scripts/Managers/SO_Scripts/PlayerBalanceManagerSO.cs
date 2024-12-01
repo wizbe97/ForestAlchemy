@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerBalanceManager", menuName = "Game/PlayerBalanceManager")]
+[CreateAssetMenu(fileName = "PlayerBalanceManager", menuName = "Game/Managers/PlayerBalanceManager")]
 public class PlayerBalanceManagerSO : ScriptableObject
 {
     public PlayerBalanceSO playerBalance;
@@ -16,8 +16,7 @@ public class PlayerBalanceManagerSO : ScriptableObject
         if (CanAfford(amount))
         {
             playerBalance.balance -= amount;
-            if (onBalanceChangedEvent != null)
-                onBalanceChangedEvent.Raise();
+            onBalanceChangedEvent?.Raise();
 
         }
     }
@@ -25,7 +24,6 @@ public class PlayerBalanceManagerSO : ScriptableObject
     public void ClearBalance()
     {
         playerBalance.balance = playerBalance.startingBalace;
-        if (onBalanceChangedEvent != null)
-            onBalanceChangedEvent.Raise();
+        onBalanceChangedEvent?.Raise();
     }
 }
